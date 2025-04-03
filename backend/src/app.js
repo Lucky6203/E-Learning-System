@@ -2,10 +2,20 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import Razorpay from "razorpay"
+import dotenv from 'dotenv';
+
 
 const app = express();
 
-app.use(cors())
+dotenv.config(); // Ensure this is called at the top
+
+
+//app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173", // Remove trailing slash
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true
+  }));
 
 app.use(express.json({limit: "16kb"}))
 app.use(express.urlencoded({extended: true, limit: "16kb"}))

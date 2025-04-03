@@ -33,6 +33,7 @@ import ResetPassword from './Pages/ForgetPassword/ResetPassword'
 import { Toaster } from 'react-hot-toast'
 import ResetTeacher from './Pages/ForgetPassword/ResetTeacher'
 import Course from './Pages/Components/Admin/Course'
+import AdminSignup from './Pages/Signup/AdminSinup'
 
 
 const router = createBrowserRouter(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
       
       <Route path='/' element={<Landing/>}/>
       <Route path='/login' element={<Login/>}/>
+      <Route path='/AdminSignup' element={<AdminSignup/>}/>
       <Route path='/Signup' element={<Signup/>}/>
       <Route path='/Search/:subject' element={<SearchData/>}/>
       <Route path='/StudentDocument/:Data' element={<StudentDocument/>}/>
@@ -70,6 +72,7 @@ const router = createBrowserRouter(
       <Route path='/forgetPassword' element={<Forgetpassword/>}/>
       <Route path='/student/forgetPassword/:token' element={<ResetPassword/>}/>
       <Route path='/teacher/forgetPassword/:token' element={<ResetTeacher/>}/>
+   
       
     
       <Route path='*' element={<ErrorPage/>}/>

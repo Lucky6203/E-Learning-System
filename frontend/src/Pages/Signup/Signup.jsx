@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Images from "../Images/Grammar-correction.svg";
 import Radiobtn from "../Components/RadioBtn/Radiobtn";
 import Header from "../Home/Header/Header";
+import { Eye, EyeOff } from "lucide-react";
 
 const Signup = () => {
   // State to hold user input and errors
@@ -14,6 +15,8 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [userType, setUserType] = useState('');
   const [err, setErr] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const navigate = useNavigate()
 
@@ -61,7 +64,7 @@ const Signup = () => {
 
     try {
       // Send data to backend (you need to implement this part)
-      const response = await fetch(`/api/${userType}/signup`, {
+      const response = await fetch(`http://localhost:9000/api/${userType}/signup`, {
         method: "POST",
         mode: "cors",
         credentials: "include",
@@ -142,16 +145,37 @@ const Signup = () => {
               <div className="error-message">{errors.email}</div>
             )}
 
-            <input
+            {/* <input
               type="password"
               className="input-x input-7"
               placeholder="Password"
               value={Password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            
             {errors.password && (
               <div className="error-message">{errors.password}</div>
-            )}
+            )} */}
+            
+            <div className="relative w-64" style={{width:"365px"}}>
+  <input
+    type={showPassword ? "text" : "password"}
+    className="input-x input-7"
+    placeholder="Password"
+    value={Password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+  <button
+    type="button"
+    onClick={() => setShowPassword((prev) => !prev)}
+    className="absolute inset-y-0 right-2 flex items-center text-gray-500" style={{marginTop:"14px"}}
+  >
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+  {errors.password && (
+    <div className="error-message">{errors.password}</div>
+  )}
+</div>
 
             <div className="rad-btns">
               <Radiobtn userType={userType} setUserType={setUserType}/>

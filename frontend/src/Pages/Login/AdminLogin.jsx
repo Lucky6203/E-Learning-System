@@ -3,6 +3,8 @@ import "./Login.css";
 import Admin from './Images/Admin.svg'
 import {  useNavigate } from "react-router-dom";
 import Header from '../Home/Header/Header';
+import { Eye, EyeOff } from "lucide-react";
+
 
 export default function AdminLogin() {
   // State to hold user input and errors
@@ -10,8 +12,12 @@ export default function AdminLogin() {
   const [Password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [err, setErr] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  
 
   const navigate = useNavigate()
+  //navigate("/adminLogin");
+
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -110,7 +116,7 @@ export default function AdminLogin() {
                 <div className="error-message">{errors.User}</div>
               )}
             </div>
-            <div className="input-2">
+          {/* <div className="input-2">
               <input
                 type="password"
                 placeholder="Password"
@@ -118,6 +124,27 @@ export default function AdminLogin() {
                 value={Password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {errors.password && (
+                <div className="error-message">{errors.password}</div>
+              )}
+            </div> */}
+
+            
+            <div className="relative w-64" style={{width:"365px"}}>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="input-x input-7"
+                placeholder="Password"
+                value={Password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-2 flex items-center text-gray-500" style={{marginTop:"14px"}}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
               {errors.password && (
                 <div className="error-message">{errors.password}</div>
               )}
@@ -142,3 +169,4 @@ export default function AdminLogin() {
     </>
   );
 }
+

@@ -4,6 +4,7 @@ import "./Login.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import Radiobtn from "../Components/RadioBtn/Radiobtn";
 import Header from "../Home/Header/Header";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
   // State to hold user input and errors
@@ -12,6 +13,8 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [userType, setUserType] = useState('');
   const [err, setErr] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+  
 
 
   const navigate=useNavigate()
@@ -47,7 +50,7 @@ export default function Login() {
 
     try {
       // Send data to backend (you need to implement this part)
-      const response = await fetch(`/api/${userType}/login`, {
+      const response = await fetch(`http://localhost:9000/api/${userType}/login`, {
         method: 'POST',
         credentials: "include",
         headers: {
@@ -150,7 +153,7 @@ export default function Login() {
                 <div className="error-message">{errors.email}</div>
               )}
             </div>
-            <div className="input-2">
+            {/* <div className="input-2">
               <input
                 type="password"
                 placeholder="Password"
@@ -161,7 +164,28 @@ export default function Login() {
               {errors.password && (
                 <div className="error-message">{errors.password}</div>
               )}
+            </div> */}
+
+              <div className="relative w-64" style={{width:"365px"}}>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="input-x input-7"
+                placeholder="Password"
+                value={Password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-2 flex items-center text-gray-500" style={{marginTop:"14px"}}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+              {errors.password && (
+                <div className="error-message">{errors.password}</div>
+              )}
             </div>
+            
 
             {/* radio buttons */}
             <div className="radio-btn">

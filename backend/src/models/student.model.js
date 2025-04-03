@@ -100,30 +100,50 @@ studentSchema.methods.generateAccessToken = function(){
     })
 }
 
-studentSchema.methods.generateRefreshToken = function(){
-    return jwt.sign({
-        _id:this._id,
-        Email:this.Email,
-    },
-    process.env.REFRESH_TOKEN_SECRET,{
-        expiresIn:process.env.REFRESH_TOKEN_EXPIRY
-    })
-}
+// studentSchema.methods.generateRefreshToken = function(){
+//     return jwt.sign({
+//         _id:this._id,
+//         Email:this.Email,
+//     },
+//     process.env.REFRESH_TOKEN_SECRET,{
+//         expiresIn:process.env.REFRESH_TOKEN_EXPIRY
+//     })
+// }
 
-studentSchema.methods.generateResetToken =async function(){
+studentSchema.methods.generateAccessToken = function () {
+    if (!process.env.ACCESS_TOKEN_SECRET || !process.env.ACCESS_TOKEN_EXPIRY) {
+        throw new Error("Missing ACCESS_TOKEN_SECRET or ACCESS_TOKEN_EXPIRY in .env file");
+    }
+    return jwt.sign(
+        { _id: this._id, Email: this.Email },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
+    );
+};
 
-    const reset=crypto.randomBytes(20).toString('hex') ;
+// studentSchema.methods.generateResetToken =async function(){
 
-    this.forgetPasswordToken=crypto.createHash('sha256').update(reset).digest('hex') ;
+//     const reset=crypto.randomBytes(20).toString('hex') ;
 
-    this.forgetPasswordExpiry=Date.now() + 15 * 60 * 1000 ; 
+//     this.forgetPasswordToken=crypto.createHash('sha256').update(reset).digest('hex') ;
 
-    await this.save() ;
+//     this.forgetPasswordExpiry=Date.now() + 15 * 60 * 1000 ; 
 
-}
+//     await this.save() ;
+
+// }
 
 
-
+studentSchema.methods.generateRefreshToken = function () {
+    if (!process.env.REFRESH_TOKEN_SECRET || !process.env.REFRESH_TOKEN_EXPIRY) {
+        throw new Error("Missing REFRESH_TOKEN_SECRET or REFRESH_TOKEN_EXPIRY in .env file");
+    }
+    return jwt.sign(
+        { _id: this._id, Email: this.Email },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
+    );
+};
 
 
 

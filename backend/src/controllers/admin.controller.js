@@ -9,6 +9,7 @@ import { course } from "../models/course.model.js";
 import {Sendmail} from "../utils/Nodemailer.js"
 
 
+
 const adminSignUp = asyncHandler(async(req,res)=>{
     const {username, password} = req.body
 
@@ -16,6 +17,7 @@ const adminSignUp = asyncHandler(async(req,res)=>{
         throw new ApiError(400, "All fields are required");
     }
 
+    
     const existedAdmin = await admin.findOne({ username})
 
     if(existedAdmin){
@@ -36,6 +38,37 @@ const adminSignUp = asyncHandler(async(req,res)=>{
     .json(new ApiResponse(400,{}, "admin added successfully"))
 
 })
+
+// const adminSignUp = asyncHandler(async (req, res) => {
+//     const { username, password } = req.body;
+
+//     // Check for missing fields
+//     if ([username, password].some((field) => field?.trim() === "")) {
+//         throw new ApiError(400, "All fields are required");
+//     }
+
+//     // Check if admin already exists
+//     const existedAdmin = await Admin.findOne({ username });
+//     if (existedAdmin) {
+//         throw new ApiError(400, "Admin already exists");
+//     }
+
+//     // Hash the password before storing
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Create new admin
+//     const newAdmin = await Admin.create({
+//         username,
+//         password: hashedPassword,
+//     });
+
+//     if (!newAdmin) {
+//         throw new ApiError(400, "Failed to add admin");
+//     }
+
+//     return res.status(201).json(new ApiResponse(201, {}, "Admin added successfully"));
+// });
+
 
 const generateAccessAndRefreshTokens = async (admindID) =>{ 
     try {
